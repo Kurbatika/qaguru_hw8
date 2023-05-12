@@ -2,20 +2,27 @@ package utils;
 
 import com.github.javafaker.Faker;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomUtils {
 
     public static String state = new String();
 
+    private static Faker faker = new Faker();
+
+    static Date fakerDateOfBirthday = faker.date().birthday();
+
     public static String getRandomName() {
 
-        return new Faker().name().firstName();
+        return faker.name().firstName();
     }
 
     public static String getRandomLastName() {
 
-        return new Faker().name().lastName();
+        return faker.name().lastName();
     }
 
     public static int getRandomInt(int min, int max) {
@@ -24,7 +31,7 @@ public class RandomUtils {
     }
 
     public static String getRandomEmail() {
-        return new Faker().internet().emailAddress();
+        return faker.internet().emailAddress();
     }
 
     public static String getRandomItemFromArray(String[] values) {
@@ -40,33 +47,28 @@ public class RandomUtils {
     }
 
     public static String getRandomPhone() {
-        Faker faker = new Faker();
         return faker.phoneNumber().subscriberNumber(10);
     }
 
-    public static String getRandomBirthDay() {
-        Faker faker = new Faker();
-
-        return String.valueOf(faker.number().numberBetween(1, 28));
-    }
-
     public static String getRandomBirthMonth() {
-        return new Faker().options().option("January", "February",
-                "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        return new SimpleDateFormat("MMMM", Locale.ENGLISH).format(fakerDateOfBirthday);
     }
 
     public static String getRandomBirthYear() {
-        Faker faker = new Faker();
-        return String.valueOf(faker.number().numberBetween(1900, 2023));
+        return new SimpleDateFormat("y", Locale.ENGLISH).format(fakerDateOfBirthday);
+    }
+
+    public static String getRandomBirthDay() {
+        return new SimpleDateFormat("dd", Locale.ENGLISH).format(fakerDateOfBirthday);
     }
 
     public static String getRandomSubject() {
-        return new Faker().options().option("Computer Science", "Hindi", "Arts", "Biology", "English");
+        return faker.options().option("Computer Science", "Hindi", "Arts", "Biology", "English");
     }
 
     public static String getRandomHobbies() {
 
-        return new Faker().options().option("Music", "Sports", "Reading");
+        return faker.options().option("Music", "Sports", "Reading");
     }
 
     public static String getPicture() {
@@ -77,17 +79,16 @@ public class RandomUtils {
 
     public static String getRandomAddress() {
 
-        return new Faker().address().fullAddress();
+        return faker.address().fullAddress();
     }
 
     public static String getRandomState() {
-        state = new Faker().options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
+        state = faker.options().option("NCR", "Uttar Pradesh", "Haryana", "Rajasthan");
 
         return state;
     }
 
     public static String getRandomCity() {
-        Faker faker = new Faker();
 
         String city = new String();
 
